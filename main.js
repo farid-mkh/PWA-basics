@@ -1,4 +1,4 @@
-import { cacheHandler } from "./cache.js"
+import { cacheHandler } from "./js/cache.js"
 const urlBase64ToUnit8Array = (base64String) => {
   const padding = '='.repeat((4 - base64String.length % 4) % 4)
   const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/')
@@ -21,11 +21,13 @@ if ('serviceWorker' in navigator) {
       // it will be fired when sth has been changed in sw
       registeration.onupdatefound = () => {
         console.log('New On updaing');
+        console.log('cache deleted');
         let newSW = registeration.installing
         newSW.onstatechange = () => {
           console.log('****' + newSW.state);
         }
         if (confirm('new Version found!! Do you want to update now?')) {
+          caches.keys().then((keys) => keys.forEach((key) => caches.delete(key)))
           newSW.postMessage('update_data') // use in message event
         }
       }
@@ -72,7 +74,7 @@ if (window.Notification) {
 
 }
 
-// Get camera feed
+// Get github 
 fetch('./github_icon.html')
   .then((res) => res.text())
   .then((html) => document.getElementById('camera').innerHTML = html)

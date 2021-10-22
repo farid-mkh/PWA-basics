@@ -1,0 +1,13 @@
+{
+  "name":"PWA app",
+  "short_name":"pwa",
+  "start_url":"/index.html",
+  "display":"standalone",
+  "background_color":"#ddd",
+  "description":"pwa manifest",
+  "icons":[{
+    "src":"./icon.png",
+    "sizes":"512x512",
+    "type":"image/png"
+  }]
+}

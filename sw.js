@@ -1,5 +1,6 @@
-const CACHE_NAME = 'pwa-sw-v1.0',
-  staticCache = ['/', 'style.css', 'main.js', 'github_icon.html']
+const CACHE_NAME = 'pwa-v1.0.0',
+  STATIC_CACHES = ['/', '/css/style.css', 'main.js', 'github_icon.html']
+
 console.log('✌ hello from sw.js');
 // Service Worker 
 // life cycle
@@ -8,7 +9,7 @@ self.addEventListener('install', (e) => {
   /********* cache ******************************************************************/
   let cacheReady = caches.open(CACHE_NAME).then((cache) => {
     console.log('new cache is ready in sw');
-    return cache.addAll(staticCache)
+    return cache.addAll(STATIC_CACHES)
   })
   /********* cache ******************************************************************/
   e.waitUntil(cacheReady)
@@ -69,7 +70,6 @@ self.addEventListener('fetch', (e) => {
 })
 // message
 self.addEventListener('message', (e) => {
-  console.log(e.data);
   if (e.data === 'update_data') {
     console.log('SW is updating');
     self.skipWaiting()
